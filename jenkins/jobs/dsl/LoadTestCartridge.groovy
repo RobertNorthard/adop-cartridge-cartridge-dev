@@ -29,7 +29,7 @@ loadCartridgeJob.with{
 # Clone Cartridge
 git clone ${CARTRIDGE_CLONE_URL} cartridge
 
-repo_namespace="${PROJECT_NAME}/devLoadedCartridge"
+repo_namespace="${PROJECT_NAME}"
 permissions_repo="${repo_namespace}/permissions"
 
 # We trust everywhere
