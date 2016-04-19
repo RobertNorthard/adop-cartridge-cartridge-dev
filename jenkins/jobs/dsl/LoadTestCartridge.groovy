@@ -12,7 +12,7 @@ def loadCartridgeJob = freeStyleJob(projectFolderName + "/LoadDevCartridge")
 // Setup Load_Cartridge
 loadCartridgeJob.with{
     parameters{
-        stringParam("CARTRIDGE_CLONE_URL", "ssh://jenkins@gerrit:29418/my-new-cartridge", "Cartridge URL to load")
+        stringParam("CARTRIDGE_CLONE_URL", "ssh://jenkins@gerrit:29418/${projectFolderName}/my-new-cartridge", "Cartridge URL to load")
     }
     environmentVariables {
         env('WORKSPACE_NAME',workspaceFolderName)

@@ -9,7 +9,7 @@ def createNewCartridgeJob = freeStyleJob(projectFolderName + "/CreateNewCartridg
  createNewCartridgeJob.with{
     parameters{
             stringParam("BASE_CARTRIDGE","https://github.com/Accenture/adop-cartridge-skeleton.git","Git URL of the cartridge you want to base the new cartridge on.")
-            stringParam("NEW_CARTRIDGE","my-new-cartridge","Name for your new cartridge.")
+            stringParam("NEW_CARTRIDGE","my-new-cartridge","Name for your new cartridge. This will be automatically namespaced using the current Workspace and Project name.")
     }
     environmentVariables {
         env('WORKSPACE_NAME',workspaceFolderName)
@@ -35,7 +35,7 @@ def createNewCartridgeJob = freeStyleJob(projectFolderName + "/CreateNewCartridg
         shell('''#!/bin/bash -ex
 
 # Create Gerrit repository
-target_repo_name=${NEW_CARTRIDGE}
+target_repo_name="${PROJECT_NAME}/${NEW_CARTRIDGE}"
 repo_exists=0
 list_of_repos=$(ssh -n -o StrictHostKeyChecking=no -p 29418 jenkins@gerrit gerrit ls-projects --type code)
 
