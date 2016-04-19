@@ -8,8 +8,8 @@ def publishCartridgeJob = freeStyleJob(projectFolderName + "/PublishCartridgeRep
  // Setup Job 
  publishCartridgeJob.with{
     parameters{
-            stringParam("CARTRIDGE_REPO","ssh://jenkins@gerrit:29418/my-new-cartridge","Git URL of the cartridge you want to publish.")
-            stringParam("TARGET_CARTRIDGE_REPO","","Git URL of the target repository where you want to push your cartridge to. Ensure you have added the Jenkins SSH key to the repository browser.")
+            stringParam("CARTRIDGE_REPO","ssh://jenkins@gerrit:29418/${projectFolderName}/my-new-cartridge","Git URL of the cartridge you want to publish.")
+            stringParam("TARGET_CARTRIDGE_REPO","","Git URL of the target repository where you want to push your cartridge to. Ensure you have added the Jenkins SSH key to the repository manager.")
     }
     environmentVariables {
         env('WORKSPACE_NAME',workspaceFolderName)
