@@ -3,13 +3,15 @@ def workspaceFolderName = "${WORKSPACE_NAME}"
 def projectFolderName = "${PROJECT_NAME}"
 
 // Jobs
-def createCartridgePackageJob = freeStyleJob(projectFolderName + "/createCartridgePackageJob")
+def createCartridgePackageJob = freeStyleJob(projectFolderName + "/CreateCartridgePackageJob")
 def createValidateCartridgeRepoJob = freeStyleJob(projectFolderName + "/ValidateCartridgeRepo")
 def createSonarAnalysisCartridgeJob = freeStyleJob(projectFolderName + "/SonarAnalysisCartridgeRepo")
 def createTestCartridgeRepoJob = freeStyleJob(projectFolderName + "/UnitTestCartridgeRepo")
 
 // Views
 def pipelineView = buildPipelineView(projectFolderName + "/Cartridge_CI_Pipeline")
+
+def gerritGitRepoAccessCredentialsKeyName = 'adop-jenkins-master'
 
 pipelineView.with {
     title('Cartirdge CI Pipeline')
@@ -34,6 +36,16 @@ createCartridgePackageJob.with{
        injectPasswords()
        maskPasswords()
        sshAgent("adop-jenkins-master")
+   }
+   scm {
+        git{
+            remote{
+                name("origin")
+                url('${CARTRIDGE_REPO}')
+                credentials(gerritGitRepoAccessCredentialsKeyName)
+            }
+            branch('*/master')
+        }
    }
    publishers {
        archiveArtifacts("**/*")
