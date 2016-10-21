@@ -3,7 +3,7 @@ def workspaceFolderName = "${WORKSPACE_NAME}"
 def projectFolderName = "${PROJECT_NAME}"
 
 // Jobs
-def createCartridgePackageJob = freeStyleJob(projectFolderName + "/CreateCartridgePackageJob")
+def createCartridgePackageJob = freeStyleJob(projectFolderName + "/CartridgePackageJob")
 def createValidateCartridgeRepoJob = freeStyleJob(projectFolderName + "/ValidateCartridgeRepo")
 def createSonarAnalysisCartridgeJob = freeStyleJob(projectFolderName + "/SonarAnalysisCartridgeRepo")
 def createTestCartridgeRepoJob = freeStyleJob(projectFolderName + "/UnitTestCartridgeRepo")
@@ -35,7 +35,7 @@ createCartridgePackageJob.with{
        preBuildCleanup()
        injectPasswords()
        maskPasswords()
-       sshAgent("adop-jenkins-master")
+       sshAgent(gerritGitRepoAccessCredentialsKeyName)
    }
    scm {
         git{
