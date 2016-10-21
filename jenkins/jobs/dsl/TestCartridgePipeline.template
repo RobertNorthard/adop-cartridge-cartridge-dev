@@ -13,6 +13,8 @@ def pipelineView = buildPipelineView(projectFolderName + "/Cartridge_CI_Pipeline
 
 def gerritGitRepoAccessCredentialsKeyName = 'adop-jenkins-master'
 
+def cartridgeRepo = ${CARTRIDGE_REPO}
+
 pipelineView.with {
     title('Cartirdge CI Pipeline')
     displayedBuilds(5)
@@ -25,7 +27,7 @@ pipelineView.with {
 // Setup Job
 createCartridgePackageJob.with{
    parameters{
-      stringParam("CARTRIDGE_REPO","ssh://jenkins@gerrit:29418/${projectFolderName}/my-new-cartridge","Git URL of the cartridge you want to validate.")
+      stringParam("CARTRIDGE_REPO",cartridgeRepo,"Git URL of the cartridge you want to validate.")
    }
    environmentVariables {
        env('WORKSPACE_NAME',workspaceFolderName)
