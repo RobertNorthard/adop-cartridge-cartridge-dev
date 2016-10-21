@@ -58,7 +58,6 @@ createSonarAnalysisCartridgeJob.with {
     environmentVariables {
         env('WORKSPACE_NAME', workspaceFolderName)
         env('PROJECT_NAME', projectFolderName)
-        env('PROJECT_NAME_KEY', projectNameKey)
     }
     wrappers {
         preBuildCleanup()
