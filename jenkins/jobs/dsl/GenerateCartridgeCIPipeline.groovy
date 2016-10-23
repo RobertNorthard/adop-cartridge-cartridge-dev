@@ -22,7 +22,8 @@ createNewGenerateCartridgeCIPipelineJob.with{
       artifactNumToKeep(logRotatorArtifactsNumToKeep)
    }
    parameters{
-
+      stringParam("CARTRIDGE_CLONE_URL", "ssh://jenkins@gerrit:29418/${projectFolderName}/my-new-cartridge", "Cartridge URL to load.")
+      stringParam("CARTRIDGE_NAME", "", "Cartridge name.")
    }
    environmentVariables {
       env('WORKSPACE_NAME', workspaceFolderName)
