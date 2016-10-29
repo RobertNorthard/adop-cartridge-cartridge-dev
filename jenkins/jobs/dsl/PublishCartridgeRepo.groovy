@@ -4,8 +4,8 @@ def projectFolderName = "${PROJECT_NAME}"
 
 // Jobs
 def publishCartridgeJob = freeStyleJob(projectFolderName + "/PublishCartridgeRepo")
- 
- // Setup Job 
+
+ // Setup Job
  publishCartridgeJob.with{
     parameters{
             stringParam("CARTRIDGE_REPO","ssh://jenkins@gerrit:29418/${projectFolderName}/my-new-cartridge","Git URL of the cartridge you want to publish.")
@@ -51,5 +51,5 @@ echo Your local cartridge has been pushed to the specified target: ${TARGET_CART
 echo
 ''')
     }
-    
+
  }

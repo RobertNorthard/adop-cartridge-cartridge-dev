@@ -23,7 +23,7 @@ createNewGenerateCartridgeCIPipelineJob.with{
    }
    parameters{
       stringParam("CARTRIDGE_NAME", "", "Cartridge name. Note: This adds it to the Sonar projec e.g. adop-cartridge-my-new-cartridge.")
-      stringParam("CARTRIDGE_GIT_URL", "ssh://jenkins@gerrit:29418/${projectFolderName}/my-new-cartridge", "Cartridge URL to load.")
+      stringParam("CARTRIDGE_GIT_URL", "ssh://jenkins@gerrit:29418/${projectFolderName}/my-new-cartridge", "Cartridge URL to load. Note: The adop-jenkins-master SSH key must have permission to clone the repository.")
       stringParam("CARTRIDGE_GIT_BRANCH", "*/master", "Cartridge Git branch.")
    }
    environmentVariables {
@@ -36,7 +36,9 @@ createNewGenerateCartridgeCIPipelineJob.with{
       maskPasswords()
       sshAgent(gerritGitRepoAccessCredentialsKeyName)
    }
-   dsl {
-      text(readFileFromWorkspace('cartridge/jenkins/jobs/dsl/TestCartridgePipeline.template'))
-   }
+  stpes{
+       dsl {
+          text(readFileFromWorkspace('cartridge/jenkins/jobs/dsl/TestCartridgePipeline.template'))
+       }
+  }
 }
