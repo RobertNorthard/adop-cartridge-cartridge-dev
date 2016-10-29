@@ -22,8 +22,9 @@ createNewGenerateCartridgeCIPipelineJob.with{
       artifactNumToKeep(logRotatorArtifactsNumToKeep)
    }
    parameters{
-      stringParam("CARTRIDGE_CLONE_URL", "ssh://jenkins@gerrit:29418/${projectFolderName}/my-new-cartridge", "Cartridge URL to load.")
-      stringParam("CARTRIDGE_NAME", "", "Cartridge name.")
+      stringParam("CARTRIDGE_NAME", "", "Cartridge name. Note: This adds it to the Sonar projec e.g. adop-cartridge-my-new-cartridge.")
+      stringParam("CARTRIDGE_GIT_URL", "ssh://jenkins@gerrit:29418/${projectFolderName}/my-new-cartridge", "Cartridge URL to load.")
+      stringParam("CARTRIDGE_GIT_BRANCH", "*/master", "Cartridge Git branch.")
    }
    environmentVariables {
       env('WORKSPACE_NAME', workspaceFolderName)
@@ -33,7 +34,7 @@ createNewGenerateCartridgeCIPipelineJob.with{
       preBuildCleanup()
       injectPasswords()
       maskPasswords()
-      sshAgent("adop-jenkins-master")
+      sshAgent(gerritGitRepoAccessCredentialsKeyName)
    }
    dsl {
       text(readFileFromWorkspace('cartridge/jenkins/jobs/dsl/TestCartridgePipeline.template'))

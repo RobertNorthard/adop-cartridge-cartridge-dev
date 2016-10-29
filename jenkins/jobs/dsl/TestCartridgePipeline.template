@@ -14,7 +14,9 @@ def pipelineView = buildPipelineView(projectFolderName + "/" + cartridgeName + "
 
 def gerritGitRepoAccessCredentialsKeyName = 'adop-jenkins-master'
 
-def cartridgeRepo = ${CARTRIDGE_REPO}
+def cartridgeGitRepo = "${CARTRIDGE_GIT_URL}"
+def cartridgeGitBranch = "${CARTRIDGE_GIT_BRANCH}"
+def cartridgeName = "${CARTRIDGE_NAME}"
 
 pipelineView.with {
     title('Cartirdge CI Pipeline for cartridge ' + cartridgeName)
@@ -44,10 +46,10 @@ createCartridgePackageJob.with{
         git{
             remote{
                 name("origin")
-                url('${CARTRIDGE_REPO}')
+                url(cartridgeGitRepo)
                 credentials(gerritGitRepoAccessCredentialsKeyName)
             }
-            branch('*/master')
+            branch(cartridgeGItBranch)
         }
    }
    publishers {
@@ -68,7 +70,7 @@ createSonarAnalysisCartridgeJob.with {
     description("This job runs code quality analysis for cartridge using SonarQube.")
     parameters {
         stringParam("BUILD_NUMBER", '', "Parent build number")
-        stringParam("PARENT_BUILD", "", "Parent build to retrieve artefacts from.")
+        stringParam("PARENT_BUILD", '', "Parent build to retrieve artefacts from.")
     }
     environmentVariables {
         env('WORKSPACE_NAME', workspaceFolderName)
@@ -92,7 +94,7 @@ createSonarAnalysisCartridgeJob.with {
         myProject / builders << 'hudson.plugins.sonar.SonarRunnerBuilder'(plugin: "sonar@2.2.1") {
             project('sonar-project.properties')
             properties('''sonar.projectKey=${PROJECT_NAME_KEY}
-sonar.projectName=${PROJECT_NAME}
+sonar.projectName=''' + cartridgeName + '''
 sonar.projectVersion=1.0.${B}
 sonar.sources=jenkins/job/dsl
 sonar.language=groovy
