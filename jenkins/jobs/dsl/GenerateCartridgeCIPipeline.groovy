@@ -36,7 +36,7 @@ createNewGenerateCartridgeCIPipelineJob.with{
       maskPasswords()
       sshAgent(gerritGitRepoAccessCredentialsKeyName)
    }
-  stpes{
+  steps{
        dsl {
           text(readFileFromWorkspace('cartridge/jenkins/jobs/dsl/TestCartridgePipeline.template'))
        }
